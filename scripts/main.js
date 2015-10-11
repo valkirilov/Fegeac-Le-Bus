@@ -258,7 +258,7 @@ var App = (function() {
     // Make some final checks
     if (elements.timetable.find('tr.hidden').size() === timetable.length) {
       elements.timetable.append('<tr class="warning"><td colspan="2"><h5 class="text-center">No more busses today!</h5></td></tr>');
-      elements.timetable.append('<tr><td colspan="2"><p class="text-center">Check again tomorrow or load the <a class="form-load-full-timetable">full timetable</a>.</p></td></tr>');
+      elements.timetable.append('<tr><td colspan="2"><p class="text-center">Load the <a class="form-load-full-timetable">full timetable</a>.</p></td></tr>');
 
       // Load the full timetable for the specific station
       $('.form-load-full-timetable').on('click tab', function() {

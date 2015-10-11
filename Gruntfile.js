@@ -69,6 +69,15 @@ module.exports = function(grunt) {
         },
       },
 
+      connect: {
+        server: {
+          options: {
+            port: 3030,
+            hostname: '*',
+          }
+        }
+      },
+
       notify_hooks: {
         options: {
           enabled: true,
@@ -97,8 +106,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-cache-breaker');
     grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.task.run('notify_hooks');
     
-    grunt.registerTask('default', ['less', 'cssmin', 'uglify', 'cachebreaker', 'watch']);
+    grunt.registerTask('default', ['less', 'cssmin', 'uglify', 'cachebreaker', 'connect', 'watch']);
 };
