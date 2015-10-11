@@ -1,0 +1,18 @@
+body {
+  padding-top: 10px;
+}
+.col-center {
+  margin: 10px auto;
+  float: none !important;
+  position: relative;
+}
+.vertical-padding {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#form-direction-toggle {
+  margin-top: -5px;
+}
+a {
+  cursor: pointer;
+}

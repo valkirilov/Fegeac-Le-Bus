@@ -1,0 +1,21 @@
+{
+  "name": "Figeac-Le-Bus",
+  "version": "0.0.0",
+  "homepage": "https://github.com/valkirilov/Figeac-Le-Bus",
+  "authors": [
+    "Valentin Kirilov <val.kirilov@gmail.com>"
+  ],
+  "description": "A simple offline app for the timetable of the busses in Figeac, France",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "moment": "~2.10.6",
+    "bootstrap": "~3.3.5"
+  }
+}
