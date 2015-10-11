@@ -49,7 +49,7 @@ var HtmlGenerator = (function() {
     var trElement = $('<tr></tr>');
 
     var tdTime = $('<td></td>');
-    tdTime.html(timeData);
+    tdTime.html('<span class="glyphicon glyphicon-time"></span> ' + timeData);
 
     var tdArrive = $('<td></td>');
     var timeNow = moment(),
@@ -75,7 +75,7 @@ var HtmlGenerator = (function() {
         trElement.addClass('success');
       }
 
-      tdArrive.html(timeArrive.fromNow());
+      tdArrive.html('<span class="fa fa-bus"></span> &nbsp;' + timeArrive.fromNow());
     }
 
     trElement.append(tdTime);

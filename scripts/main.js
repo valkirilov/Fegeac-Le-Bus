@@ -141,13 +141,15 @@ var App = (function() {
    * Main init function which is registering everything and preparing the app fo use
    */
   var init = function() {
+
+    moment.tz.setDefault('Europe/Paris');
+
     elements.lines = $('#form-select-lines');
     elements.directionsToggle = $('#form-direction-toggle');
     elements.direction1 = $('#form-direction-1');
     elements.direction2 = $('#form-direction-2');
     elements.stations = $('#form-select-stations');
     elements.timetable = $('#form-table-timetable');
-
 
     initLines();
 
