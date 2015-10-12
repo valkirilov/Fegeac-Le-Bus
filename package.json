@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "description": "A simple offline app for the timetable of the busses in Figeac, France",
   "license": "MIT",
-  "dependencies": {},
   "scripts": {
     "start": "grunt"
   },
