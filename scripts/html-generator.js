@@ -84,10 +84,26 @@ var HtmlGenerator = (function() {
     return trElement;
   };
 
+  var createBookmarkElement = function(bookmark) {
+    var element = $('<li></li>');
+
+    element.append('<span class="fa fa-2x fa-home"></span>');
+    element.attr('data-line', bookmark.line);
+    element.attr('data-station', bookmark.station);
+    element.attr('data-toggle', 'tooltip');
+    element.attr('data-placement', 'bottom');
+    element.attr('title', bookmark.name);
+
+    element.tooltip();
+
+    return element;
+  };
+
   return {
     createLineOptionElement: createLineOptionElement,
     createStationOptionElement: createStationOptionElement,
-    createTableRowTimeElement: createTableRowTimeElement
+    createTableRowTimeElement: createTableRowTimeElement,
+    createBookmarkElement: createBookmarkElement,
   };
 
 })();

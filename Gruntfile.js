@@ -32,7 +32,7 @@ module.exports = function(grunt) {
         },
         my_target: {
           files: {
-            'dist/main.min.js': ['scripts/main.js', 'scripts/html-generator.js']
+            'dist/main.min.js': ['scripts/main.js', 'scripts/html-generator.js', 'scripts/bookmarks.js']
           }
         }
       },

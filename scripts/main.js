@@ -4,9 +4,11 @@ var App = (function() {
   var data = {
     lines: [
       {
+        key: 0,
         name: '1',
         stations: [
           {
+            key: '0',
             name: 'Les Jardins de l’Hôpital',
             directions: [
               ['7:44', '9:07', '9:52', '11:02', '12:25', '13:17', '14:45', '16:25', '17:15', '18:05'],
@@ -15,6 +17,7 @@ var App = (function() {
           },
 
           {
+            key: '1',
             name: 'Parrine Basse',
             directions: [
               ['7:45', '7:45', '9:08', '9:53', '11:03', '12:26', '13:18', '14:46', '16:26', '17:16', '18:06'],
@@ -23,6 +26,7 @@ var App = (function() {
           },
 
           {
+            key: '2',
             name: 'Pons',
             directions: [
               ['7:46', '9:09', '9:54', '11:04', '12:27', '13:19', '14:47', '16:27', '17:17', '18:07'],
@@ -31,6 +35,7 @@ var App = (function() {
           },
 
           {
+            key: '3',
             name: 'Tillet',
             directions: [
               ['7:46', '9:09', '9:54', '11:04', '12:27', '13:19', '14:47', '16:27', '17:17', '18:07'],
@@ -39,6 +44,7 @@ var App = (function() {
           },
 
           {
+            key: '4',
             name: 'Pinquié',
             directions: [
               ['7:47', '9:10', '9:55', '11:05', '12:28', '13:20', '14:48', '16:28', '17:18', '18:08'],
@@ -47,6 +53,7 @@ var App = (function() {
           },
 
           {
+            key: '5',
             name: 'Centre des Impôts',
             directions: [
               ['7:47', '9:10', '9:55', '11:05', '12:28', '13:20', '14:48', '16:28', '17:18', '18:08'],
@@ -55,6 +62,7 @@ var App = (function() {
           },
 
           {
+            key: '6',
             name: 'Les Miattes',
             directions: [
               ['7:48', '9:11', '9:56', '11:06', '12:29', '13:21', '14:49', '16:29', '17:19', '18:09'],
@@ -63,6 +71,7 @@ var App = (function() {
           },
 
           {
+            key: '7',
             name: 'La Pintre',
             directions: [
               ['7:50', '9:13', '9:58', '11:08', '12:31', '13:23', '14:51', '16:31', '17:21', '18:11'],
@@ -71,6 +80,7 @@ var App = (function() {
           },
 
           {
+            key: '8',
             name: 'Gendarmerie',
             directions: [
               ['7:50', '9:13', '9:58', '11:08', '12:31', '13:23', '14:51', '16:31', '17:21', '18:11'],
@@ -79,6 +89,7 @@ var App = (function() {
           },
 
           {
+            key: '9',
             name: 'I.U.T.',
             directions: [
               ['7:53', '9:16', '10:01', '11:11', '12:34', '13:26', '14:54', '16:34', '17:24', '18:14'],
@@ -87,6 +98,7 @@ var App = (function() {
           },
 
           {
+            key: '10',
             name: 'Ecureuils',
             directions: [
               ['7:55', '9:18', '10:03', '11:13', '12:36', '13:28', '14:56', '16:36', '17:26', '18:16'],
@@ -95,6 +107,7 @@ var App = (function() {
           },
 
           {
+            key: '11',
             name: 'Genevriers',
             directions: [
               ['7:56', '9:19', '10:04', '11:14', '12:37', '13:29', '14:57', '16:37', '17:27', '18:17'],
@@ -103,6 +116,7 @@ var App = (function() {
           },
 
           {
+            key: '12',
             name: 'Nayrac',
             directions: [
               ['7:57', '9:20', '10:05', '11:15', '12:38', '13:30', '14:58', '16:38', '17:28', '18:18'],
@@ -120,7 +134,47 @@ var App = (function() {
       {
         name: '3 (future)',
         stations: []
-      }
+      },
+
+      {
+        name: '4 (future)',
+        stations: []
+      },
+
+      {
+        name: '5 (future)',
+        stations: []
+      },
+
+      {
+        name: '6 (future)',
+        stations: []
+      },
+
+      {
+        name: '7 (future)',
+        stations: []
+      },
+
+      {
+        name: '8 (future)',
+        stations: []
+      },
+
+      {
+        name: '9 (future)',
+        stations: []
+      },
+
+      {
+        name: '10 (future)',
+        stations: []
+      },
+
+      {
+        name: '11 (future)',
+        stations: []
+      },
     ]
   };
 
@@ -143,15 +197,21 @@ var App = (function() {
   var init = function() {
 
     moment.tz.setDefault('Europe/Paris');
+    $('[data-toggle="tooltip"]').tooltip();
 
     elements.lines = $('#form-select-lines');
+    elements.bookmarks = $('#form-bookmarks');
     elements.directionsToggle = $('#form-direction-toggle');
     elements.direction1 = $('#form-direction-1');
     elements.direction2 = $('#form-direction-2');
     elements.stations = $('#form-select-stations');
     elements.timetable = $('#form-table-timetable');
+    elements.addStar = $('#form-star-add');
+    elements.removeStar = $('#form-star-remove');
 
+    Bookmarks.init();
     initLines();
+    initBookmarks();
 
     actions();
   };
@@ -170,6 +230,9 @@ var App = (function() {
     selectLine(active.line);
   };
 
+  /**
+   * Generate the options of the stations select box dpending on the direction
+   */
   var generateStations = function() {
     elements.stations.html('');
 
@@ -186,6 +249,18 @@ var App = (function() {
          elements.stations.append(HtmlGenerator.createStationOptionElement(currentStation, stationCounter));
       } 
     }
+  };
+
+  /**
+   * Init and generate markup for the bookmarks bar
+   */
+  var initBookmarks = function() {
+    var bookmarks = Bookmarks.getAll();
+    bookmarks.forEach(function(bookmark) {
+      if (bookmark !== null) {
+        elements.bookmarks.append(HtmlGenerator.createBookmarkElement(bookmark));
+      }
+    });
   };
 
   /**
@@ -212,6 +287,28 @@ var App = (function() {
     // Click event of the directions togle button
     elements.directionsToggle.on('click', function(e) {
       swapDirections();
+    });
+
+    // Add new bookmark
+    elements.addStar.on('click', function() {
+      Bookmarks.set(active.line.key, active.station.key);
+
+      elements.removeStar.removeClass('hidden');
+      elements.addStar.addClass('hidden');
+    });
+
+    // Remove exisitng bookmark
+    elements.removeStar.on('click', function() {
+      Bookmarks.remove(active.line.key, active.station.key);
+
+      elements.addStar.removeClass('hidden');
+      elements.removeStar.addClass('hidden');
+    });
+
+    // Go to bookmark
+    elements.bookmarks.find('li').on('click', function() {
+      var self = $(this);
+      activateBookmark(self);
     });
 
   };
@@ -269,8 +366,23 @@ var App = (function() {
         scrollToElement(elements.timetable.prev());
       });
     }
+
+    // Show/Hide Add/Remove Star
+    var isBookmarked = Bookmarks.get(active.line.key, active.station.key);
+    if (isBookmarked) {
+      elements.addStar.addClass('hidden');
+      elements.removeStar.removeClass('hidden');
+    }
+    else {
+      elements.addStar.removeClass('hidden');
+      elements.removeStar.addClass('hidden');
+    }
+    
   };
 
+  /**
+   * Swap the directions
+   */
   var swapDirections = function() {
 
     var direction1Name = elements.direction1.html(),
@@ -290,6 +402,23 @@ var App = (function() {
     generateStations();
     var stationIndex = elements.stations.find('option:contains("'+active.station.name+'")').val();
     elements.stations.val(stationIndex);
+    selectStation(active.station);
+  };
+
+  /**
+   * Activate specific bookmark, eg. select line and station
+   * @param  {HtmlElement} bookmark 
+   */
+  var activateBookmark = function(bookmark) {
+    var line = bookmark.attr('data-line'),
+        station = bookmark.attr('data-station');
+
+    active.line = data.lines[line];
+    elements.lines.val(line);    
+    active.station = active.line[station];
+
+    selectLine(active.line);
+    elements.stations.val(station);
     selectStation(active.station);
   };
 
