@@ -5,7 +5,6 @@ var Bookmarks = (function() {
 
   var init = function() {
     bookmarks = Cookies.get('bookmarks') === undefined  ? [] : JSON.parse(Cookies.get('bookmarks'));
-    console.log(bookmarks);
   };
 
   var get = function(line, station) {
@@ -17,13 +16,13 @@ var Bookmarks = (function() {
     return bookmarks;
   };
 
-  var set = function(line, station) {
+  var set = function(line, station, name, icon) {
     var newBookmark = {
       key: generateKey(line, station),
       line: line,
       station: station,
-      type: 'home',
-      name: ''
+      type: icon,
+      name: name
     };
 
     bookmarks[newBookmark.key] = newBookmark;

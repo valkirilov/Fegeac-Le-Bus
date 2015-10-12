@@ -86,8 +86,8 @@ var HtmlGenerator = (function() {
 
   var createBookmarkElement = function(bookmark) {
     var element = $('<li></li>');
-
-    element.append('<span class="fa fa-2x fa-home"></span>');
+    
+    element.append('<span class="fa fa-2x fa-'+bookmark.type+'"></span>');
     element.attr('data-line', bookmark.line);
     element.attr('data-station', bookmark.station);
     element.attr('data-toggle', 'tooltip');

@@ -21,6 +21,10 @@ body {
 .color-grey {
   background: #eeeeee;
 }
+.dropdown-modal {
+  padding: 10px;
+  width: 175px;
+}
 #form-bookmarks {
   margin-top: 10px;
   clear: both;
@@ -33,6 +37,14 @@ body {
   float: left;
   margin-right: 15px;
   cursor: pointer;
+}
+.modal-option-icon {
+  width: 30px;
+  position: relative;
+  float: left !important;
+  clear: none !important;
+  padding: 5px !important;
+  text-align: center;
 }
 a {
   cursor: pointer;

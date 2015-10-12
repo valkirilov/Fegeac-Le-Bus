@@ -201,6 +201,9 @@ var App = (function() {
 
     elements.lines = $('#form-select-lines');
     elements.bookmarks = $('#form-bookmarks');
+    elements.bookmarksName = $('#modal-bookmark-name');
+    elements.bookmarksIcon = $('#modal-bookmark-icon');
+    elements.bookmarksConfirm = $('#modal-bookmark-confirm');
     elements.directionsToggle = $('#form-direction-toggle');
     elements.direction1 = $('#form-direction-1');
     elements.direction2 = $('#form-direction-2');
@@ -289,12 +292,37 @@ var App = (function() {
       swapDirections();
     });
 
-    // Add new bookmark
+    // Open modal to add a new bookmark
     elements.addStar.on('click', function() {
-      Bookmarks.set(active.line.key, active.station.key);
+      elements.bookmarksName.val('');
+      elements.bookmarksIcon.attr('data-icon', 'home');
+      elements.bookmarksIcon.attr('class', 'fa fa-lg fa-home');
+      $('.modal-add-bookmark').modal();
+    });
+
+    // Add new bookmark
+    elements.bookmarksConfirm.on('click', function() {
+      var bookmarkName = elements.bookmarksName.val();
+      var bookmarkIcon = elements.bookmarksIcon.attr('data-icon');
+      Bookmarks.set(active.line.key, active.station.key, bookmarkName, bookmarkIcon);
 
       elements.removeStar.removeClass('hidden');
       elements.addStar.addClass('hidden');
+
+      var newElement = HtmlGenerator.createBookmarkElement({
+        line: parseInt(active.line.key),
+        station: parseInt(active.station.key),
+        name: bookmarkName,
+        type: bookmarkIcon
+      });
+      elements.bookmarks.append(newElement);
+
+      $('.modal-add-bookmark').modal('hide');
+      newElement.click(function() {
+        var self = $(this);
+        activateBookmark(self);  
+      });
+      
     });
 
     // Remove exisitng bookmark
@@ -303,12 +331,22 @@ var App = (function() {
 
       elements.addStar.removeClass('hidden');
       elements.removeStar.addClass('hidden');
+
+      elements.bookmarks.find('li[data-line="'+active.line.key+'"][data-station="'+active.station.key+'"]').remove();
     });
 
     // Go to bookmark
     elements.bookmarks.find('li').on('click', function() {
       var self = $(this);
       activateBookmark(self);
+    });
+
+    // // Select new type of icon
+    $('.modal-option-icon').on('click', function() {
+      var option = $(this).attr('data-icon');
+      
+      elements.bookmarksIcon.attr('data-icon', option);
+      elements.bookmarksIcon.attr('class', 'fa fa-lg fa-'+option);
     });
 
   };
@@ -413,11 +451,11 @@ var App = (function() {
     var line = bookmark.attr('data-line'),
         station = bookmark.attr('data-station');
 
-    active.line = data.lines[line];
     elements.lines.val(line);    
-    active.station = active.line[station];
-
+    active.line = data.lines[line];
     selectLine(active.line);
+    
+    active.station = active.line.stations[station];
     elements.stations.val(station);
     selectStation(active.station);
   };
