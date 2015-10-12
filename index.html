@@ -14,7 +14,7 @@
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     
     <link href="dist/cosmo.min.css?rel=1444144693612" rel="stylesheet">
-    <link href="dist/main.min.css?rel=1444594038902" rel="stylesheet">
+    <link href="dist/main.min.css?rel=1444678475285" rel="stylesheet">
 
     <!-- Setup favicons -->
     <link rel="apple-touch-icon" href="apple-touch-icon.png?v=1" />
@@ -51,6 +51,8 @@
             <span class="input-group-addon"><span class="fa fa-bus"></span></span>
             <select id="form-select-lines" class="form-control"></select>
           </div>
+
+          <ul id="form-bookmarks"></ul>
         </div>
 
         <div class="clearfix"></div>
@@ -59,9 +61,23 @@
         <div class="col-sm-6 col-center">
           <h4>Direction</h4>
           <span id="form-direction-1" class="vertical-padding">Direction 1</span>
-          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span class="fa fa-long-arrow-right"></span>
           <span id="form-direction-2" class="vertical-padding">Direction 2</span>
-          <button id="form-direction-toggle" class="btn btn-primary btn-sm pull-right"><span class="glyphicon glyphicon-transfer"></span></button>
+
+          <button id="form-direction-toggle" class="btn btn-primary btn-sm pull-right btn-align"
+            data-toggle="tooltip" data-placement="bottom" title="Swap Directions">
+            <span class="glyphicon glyphicon-transfer"></span>
+          </button>
+
+          <button id="form-star-add" class="btn btn-success btn-sm pull-right btn-align"
+            data-toggle="tooltip" data-placement="bottom" title="Add to Bookmarks"
+            data-toggle="modal" data-target=".modal-add-bookmark" >
+            <span class="fa fa-star"></span>
+          </button>
+          <button id="form-star-remove" class="btn btn-danger btn-sm pull-right btn-align"
+            data-toggle="tooltip" data-placement="bottom" title="Remove from Bookmarks">
+            <span class="fa fa-star-o"></span>
+          </button>
         </div>
 
         <div class="clearfix"></div>
@@ -84,6 +100,67 @@
 
       <div class="clearfix"></div>
 
+      <div class="modal fade modal-add-bookmark">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title text-center">Add a Bookmark</h4>
+            </div>
+            <div class="modal-body">
+              <p class="text-center">Save this station for easy access later</p>
+
+              <div class="col-sm-9 col-center">
+                <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="modal-bookmark-icon" data-icon="home" class="fa fa-lg fa-home"></span> &nbsp; <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-modal">
+                      <li>
+                        <a href="#" class="modal-option-icon" data-icon="home"><span class="fa fa-lg fa-home"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="hotel"><span class="fa fa-lg fa-hotel"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="building"><span class="fa fa-lg fa-building"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="university"><span class="fa fa-lg fa-university"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="graduation-cap"><span class="fa fa-lg fa-graduation-cap"></span></a>
+                      </li>
+
+                      <li>
+                        <a href="#" class="modal-option-icon" data-icon="child"><span class="fa fa-lg fa-child"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="male"><span class="fa fa-lg fa-male"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="female"><span class="fa fa-lg fa-female"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="group"><span class="fa fa-lg fa-group"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="tree"><span class="fa fa-lg fa-tree"></span></a>
+                      </li>
+
+                      <li>
+                        <a href="#" class="modal-option-icon" data-icon="coffee"><span class="fa fa-lg fa-coffee"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="glass"><span class="fa fa-lg fa-glass"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="cutlery"><span class="fa fa-lg fa-cutlery"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="shopping-cart"><span class="fa fa-lg fa-shopping-cart"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="futbol-o"><span class="fa fa-lg fa-futbol-o"></span></a>
+                      </li>
+
+                      <li>
+                        <a href="#" class="modal-option-icon" data-icon="subway"><span class="fa fa-lg fa-subway"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="bus"><span class="fa fa-lg fa-bus"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="train"><span class="fa fa-lg fa-train"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="plane"><span class="fa fa-lg fa-plane"></span></a>
+                        <a href="#" class="modal-option-icon" data-icon="ship"><span class="fa fa-lg fa-ship"></span></a>
+                      </li>
+        
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <input type="text" id="modal-bookmark-name" class="form-control" placeholder="Bookmark name" />
+                </div><!-- /input-group -->
+              </div><!-- /.row -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" id="modal-bookmark-confirm" class="btn btn-success">Confirm</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
     </div> <!-- /container -->
 
     <footer class="text-center">
@@ -93,6 +170,7 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/js-cookie/src/js.cookie.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
@@ -100,12 +178,13 @@
     
     <!-- Production -->
     <!-- -->
-    <script src="dist/main.min.js?rel=1444594038902"></script>
+    <script src="dist/main.min.js?rel=1444678475286"></script>
     <!-- -->
 
     <!-- Dev -->
     <!-- 
     <script src="scripts/html-generator.js"></script>
+    <script src="scripts/bookmarks.js"></script>
     <script src="scripts/main.js"></script>
     -->
   </body>
