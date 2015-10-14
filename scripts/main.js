@@ -190,6 +190,8 @@ var App = (function() {
   };
 
   var stations = [];
+  var REFRESH_TIME = 21 * 1000;
+  var refreshTimeout;
 
   /**
    * Main init function which is registering everything and preparing the app fo use
@@ -197,7 +199,7 @@ var App = (function() {
   var init = function() {
 
     moment.tz.setDefault('Europe/Paris');
-    $('[data-toggle="tooltip"]').tooltip();
+    initTooltips();
 
     elements.lines = $('#form-select-lines');
     elements.bookmarks = $('#form-bookmarks');
@@ -211,12 +213,17 @@ var App = (function() {
     elements.timetable = $('#form-table-timetable');
     elements.addStar = $('#form-star-add');
     elements.removeStar = $('#form-star-remove');
+    elements.refresh = $('#form-refresh');
 
     Bookmarks.init();
     initLines();
     initBookmarks();
 
     actions();
+
+    refreshTimeout = setTimeout(function() {
+      refresh();
+    }, REFRESH_TIME);
   };
 
   /**
@@ -231,6 +238,23 @@ var App = (function() {
 
     active.line = data.lines[0];
     selectLine(active.line);
+  };
+
+  var initTooltips = function() {
+    $('[data-toggle="tooltip"]').tooltip();
+
+    if (Cookies.get('tooltip-form-star-add')) {
+      $('#form-star-add').tooltip('destroy');
+    }
+    if (Cookies.get('tooltip-form-star-remove')) {
+      $('#form-star-remove').tooltip('destroy');
+    }
+    if (Cookies.get('tooltip-form-direction-toggle')) {
+      $('#form-direction-toggle').tooltip('destroy');
+    }
+    if (Cookies.get('tooltip-form-refresh')) {
+      $('#form-refresh').tooltip('destroy');
+    }
   };
 
   /**
@@ -349,6 +373,18 @@ var App = (function() {
       elements.bookmarksIcon.attr('class', 'fa fa-lg fa-'+option);
     });
 
+    // Set a cookie when a spicific tooltip is show to prevent it from showing again
+    $('[data-toggle="tooltip"]').on('hidden.bs.tooltip', function () {
+      $(this).tooltip('destroy');
+      var key = 'tooltip-' + $(this).attr('id');
+      Cookies.set(key, true, { expires: 30 });
+    });
+
+    // Refresh the curret timetable
+    elements.refresh.on('click', function() {
+      refresh();
+    });
+
   };
 
   /**
@@ -458,6 +494,28 @@ var App = (function() {
     active.station = active.line.stations[station];
     elements.stations.val(station);
     selectStation(active.station);
+  };
+
+  /**
+   * Refresh the current timetable
+   */
+  var refresh = function() {
+    clearTimeout(refreshTimeout);
+    selectStation(active.station);
+
+    // Disable button
+    elements.refresh.attr('disabled', 'disabled');
+    elements.refresh.find('span').addClass('fa-spin');
+
+    // Enable the button back
+    setTimeout(function() {
+      elements.refresh.removeAttr('disabled');
+      elements.refresh.find('span').removeClass('fa-spin');
+    }, 3000);
+    
+    refreshTimeout = setTimeout(function() {
+      refresh();
+    }, REFRESH_TIME);
   };
 
   /**
